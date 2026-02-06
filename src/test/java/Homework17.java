@@ -1,46 +1,27 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
+import java.util.UUID;
 
-public class Homework17 {
+public class Homework17 extends BaseTest {
     @Test
     public void addSongToPlaylist() throws InterruptedException {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
 
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        String url = "https://qa.koel.app/";
-        driver.get(url);
+        navigatingToPage();
         Thread.sleep(5000);
 
-        WebElement emailField = driver.findElement(By.cssSelector("input[type='email']"));
-        emailField.click();
-        emailField.sendKeys("rinat.salimov@testpro.io");
+        provideEmail("rinat.salimov@testpro.io");
 
-        WebElement passwordField = driver.findElement(By.cssSelector("input[type='password']"));
-        passwordField.click();
-        passwordField.sendKeys("rcmEq4st");
+        providePassword("rcmEq4st");
 
-        WebElement logInButton = driver.findElement(By.cssSelector("[type='submit']"));
-        logInButton.click();
-
+        clickOnLoginButton();
         Thread.sleep(5000);
 
-        WebElement searchField = driver.findElement(By.cssSelector("[type='search']"));
-        searchField.click();
-        searchField.sendKeys("BossStatus");
+        searchForSong("BossStatus");
 
-        WebElement viewAllButton = driver.findElement(By.cssSelector("[data-test='view-all-songs-btn']"));
-        viewAllButton.click();
-        Thread.sleep(2000);
+        clickOnViewAllButton();
 
         WebElement songBossStatus = driver.findElement(By.xpath("//td[@class='title' and normalize-space()='BossStatus']"));
         songBossStatus.click();
@@ -49,9 +30,11 @@ public class Homework17 {
         WebElement addToButton = driver.findElement(By.cssSelector("[data-test='add-to-btn']"));
         addToButton.click();
 
+        String generatedPlaylistName = generateRandomName();
+
         WebElement newPlaylistName = driver.findElement(By.xpath("(//input[@data-test='new-playlist-name'])[2]"));
         newPlaylistName.click();
-        newPlaylistName.sendKeys("TestPlaylist");
+        newPlaylistName.sendKeys(generatedPlaylistName);
 
         WebElement saveButton = driver.findElement(By.xpath("(//button[@type='submit' and @title='Save'])[2]"));
         saveButton.click();
@@ -62,8 +45,23 @@ public class Homework17 {
 
         driver.quit();
 
-
-
-
         }
+
+    private void clickOnViewAllButton() throws InterruptedException {
+        WebElement viewAllButton = driver.findElement(By.cssSelector("[data-test='view-all-songs-btn']"));
+        viewAllButton.click();
+        Thread.sleep(2000);
+    }
+
+    private void searchForSong(String songName) {
+        WebElement searchField = driver.findElement(By.cssSelector("[type='search']"));
+        searchField.click();
+        searchField.clear();
+        searchField.sendKeys(songName);
+    }
+
+    public String generateRandomName() {
+        return UUID.randomUUID().toString().replace("-", "").substring(0,5);
+    }
+
 }
