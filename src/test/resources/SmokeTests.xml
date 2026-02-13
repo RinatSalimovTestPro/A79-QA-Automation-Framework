@@ -5,11 +5,6 @@
 
     <test name="Smoke tests suite" preserve-order="false">
         <classes>
-            <class name="LoginTests">
-                    <methods>
-                        <include name="loginValidEmailPassword"/>
-                    </methods>
-            </class>
             <class name="Homework18">
                     <methods>
                         <include name="loginValidEmailPassword"/>

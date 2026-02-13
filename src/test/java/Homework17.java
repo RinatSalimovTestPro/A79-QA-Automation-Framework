@@ -1,5 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -7,27 +8,20 @@ import java.util.UUID;
 
 public class Homework17 extends BaseTest {
     @Test
-    public void addSongToPlaylist() throws InterruptedException {
-
-        navigatingToPage();
-        Thread.sleep(5000);
-
+    public void addSongToPlaylist() {
         provideEmail("rinat.salimov@testpro.io");
-
         providePassword("rcmEq4st");
 
         clickOnLoginButton();
-        Thread.sleep(5000);
 
         searchForSong("BossStatus");
 
         clickOnViewAllButton();
 
-        WebElement songBossStatus = driver.findElement(By.xpath("//td[@class='title' and normalize-space()='BossStatus']"));
+        WebElement songBossStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[@class='title' and normalize-space()='BossStatus']")));
         songBossStatus.click();
-        Thread.sleep(2000);
 
-        WebElement addToButton = driver.findElement(By.cssSelector("[data-test='add-to-btn']"));
+        WebElement addToButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='add-to-btn']")));
         addToButton.click();
 
         String generatedPlaylistName = generateRandomName();
@@ -38,19 +32,17 @@ public class Homework17 extends BaseTest {
 
         WebElement saveButton = driver.findElement(By.xpath("(//button[@type='submit' and @title='Save'])[2]"));
         saveButton.click();
-        Thread.sleep(5000);
 
-        WebElement notification = driver.findElement(By.xpath("//div[contains(@class,'success') and contains(@class,'show')]"));
+        WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'success') and contains(@class,'show')]")));
         Assert.assertTrue(notification.isDisplayed());
 
         driver.quit();
 
         }
 
-    private void clickOnViewAllButton() throws InterruptedException {
-        WebElement viewAllButton = driver.findElement(By.cssSelector("[data-test='view-all-songs-btn']"));
+    private void clickOnViewAllButton() {
+        WebElement viewAllButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='view-all-songs-btn']")));
         viewAllButton.click();
-        Thread.sleep(2000);
     }
 
     private void searchForSong(String songName) {
