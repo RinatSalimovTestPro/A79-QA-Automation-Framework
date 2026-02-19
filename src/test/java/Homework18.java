@@ -12,7 +12,6 @@ public class Homework18 extends BaseTest {
         providePassword("rcmEq4st");
 
         clickOnLoginButton();
-        Thread.sleep(5000);
 
         WebElement nextSongButton = driver.findElement(By.cssSelector("i[data-testid='play-next-btn']"));
         nextSongButton.click();
