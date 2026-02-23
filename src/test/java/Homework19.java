@@ -5,25 +5,28 @@ import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.openqa.selenium.Keys;
+import pages.HomePage;
+import pages.LoginPage;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 public class Homework19 extends BaseTest {
     @Test
     @Parameters("baseUrl")
     public void deletePlaylist(String baseUrl) {
 
-        provideEmail("rinat.salimov@testpro.io");
-        providePassword("rcmEq4st");
-        clickOnLoginButton();
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+
+        //Login with valid credentials
+        loginPage.login();
 
         List<WebElement> playlist = Collections.singletonList(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[contains(@class,'playlist')]//a"))));
 
         WebElement newPlaylistButton = driver.findElement(By.cssSelector("i[data-testid='sidebar-create-playlist-btn']"));
 
-        String playlistName = generateRandomName();
+        String playlistName = homePage.generateRandomName();
 
         newPlaylistButton.click();
 
@@ -42,10 +45,6 @@ public class Homework19 extends BaseTest {
         WebElement notification = driver.findElement(By.cssSelector("div[class='success show']"));
         Assert.assertTrue(notification.isDisplayed());
 
-    }
-
-    public String generateRandomName() {
-        return UUID.randomUUID().toString().replace("-", "").substring(0,5);
     }
 
 }

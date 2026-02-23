@@ -15,12 +15,8 @@ public class Homework21 extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = new HomePage(driver);
 
-        //Entering email address
-        loginPage.provideEmail("rinat.salimov@testpro.io");
-        //Entering password
-        loginPage.providePassword("rcmEq4st");
-        //Click on log in button
-        loginPage.clickOnLoginButton();
+        //Login with valid credentials
+        loginPage.login();
         //Playlist double click
         homePage.doubleClickPlaylist();
         //Enter new playlist name

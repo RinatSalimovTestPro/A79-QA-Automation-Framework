@@ -1,11 +1,8 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
@@ -42,25 +39,6 @@ public class BaseTest  {
     @AfterMethod
     public void closeBrowser() {
         driver.quit();
-    }
-
-    public void clickOnLoginButton() {
-        WebElement logInButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[type='submit']")));
-        logInButton.click();
-    }
-
-    public void providePassword(String password) {
-        WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type='password']")));
-        passwordField.click();
-        passwordField.clear();
-        passwordField.sendKeys(password);
-    }
-
-    public void provideEmail(String email) {
-        WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type='email']")));
-        emailField.click();
-        emailField.clear();
-        emailField.sendKeys(email);
     }
 
     public void navigatingToPage() {

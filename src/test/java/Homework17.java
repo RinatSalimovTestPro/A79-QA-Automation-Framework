@@ -3,20 +3,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.LoginPage;
 
-import java.util.UUID;
 
 public class Homework17 extends BaseTest {
     @Test
     public void addSongToPlaylist() {
-        provideEmail("rinat.salimov@testpro.io");
-        providePassword("rcmEq4st");
 
-        clickOnLoginButton();
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
 
-        searchForSong("BossStatus");
+        //Login with valid credentials
+        loginPage.login();
 
-        clickOnViewAllButton();
+        //Search for song BossStatus
+        homePage.searchForSong("BossStatus");
+
+        //Clicking on View all button
+        homePage.clickOnViewAllButton();
 
         WebElement songBossStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[@class='title' and normalize-space()='BossStatus']")));
         songBossStatus.click();
@@ -24,7 +29,7 @@ public class Homework17 extends BaseTest {
         WebElement addToButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='add-to-btn']")));
         addToButton.click();
 
-        String generatedPlaylistName = generateRandomName();
+        String generatedPlaylistName = homePage.generateRandomName();
 
         WebElement newPlaylistName = driver.findElement(By.xpath("(//input[@data-test='new-playlist-name'])[2]"));
         newPlaylistName.click();
@@ -36,24 +41,7 @@ public class Homework17 extends BaseTest {
         WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'success') and contains(@class,'show')]")));
         Assert.assertTrue(notification.isDisplayed());
 
-        driver.quit();
-
-        }
-
-    private void clickOnViewAllButton() {
-        WebElement viewAllButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='view-all-songs-btn']")));
-        viewAllButton.click();
     }
-
-    private void searchForSong(String songName) {
-        WebElement searchField = driver.findElement(By.cssSelector("[type='search']"));
-        searchField.click();
-        searchField.clear();
-        searchField.sendKeys(songName);
-    }
-
-    public String generateRandomName() {
-        return UUID.randomUUID().toString().replace("-", "").substring(0,5);
-    }
-
 }
+
+

@@ -5,18 +5,21 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.LoginPage;
 
 import java.util.List;
-import java.util.UUID;
 
 public class Homework20 extends BaseTest{
     @Test
     @Parameters("baseUrl")
     public void deletePlaylist(String baseUrl) {
 
-        provideEmail("rinat.salimov@testpro.io");
-        providePassword("rcmEq4st");
-        clickOnLoginButton();
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+
+        //Login with valid credentials
+        loginPage.login();
 
         By playlistsLocator = By.cssSelector("li.playlist a");
         List<WebElement> playlists = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(playlistsLocator, 0));
@@ -24,7 +27,7 @@ public class Homework20 extends BaseTest{
         WebElement newPlaylistButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("i[data-testid='sidebar-create-playlist-btn']")));
 
 
-        String playlistName = generateRandomName();
+        String playlistName = homePage.generateRandomName();
 
         if  (playlists.size() >= 3) {
             playlists.get(2).click();
@@ -49,10 +52,6 @@ public class Homework20 extends BaseTest{
 
         WebElement notification = driver.findElement(By.cssSelector("div[class='success show']"));
         Assert.assertTrue(notification.isDisplayed());
-    }
-
-    public String generateRandomName() {
-        return UUID.randomUUID().toString().replace("-", "").substring(0,5);
     }
 
 }

@@ -1,10 +1,12 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+
+import java.util.UUID;
 
 public class HomePage extends BasePage{
 
@@ -13,34 +15,82 @@ public class HomePage extends BasePage{
 
     }
 
-    By avatarIcon = By.cssSelector("img.avatar");
+    Actions actions = new Actions(driver);
 
-    By playlistClick = By.xpath("(//li[contains(@class,'playlist')]//a)[3]");
+    @FindBy(css = "img.avatar")
+    WebElement avatarIcon;
 
-    By playlistInputField = By.cssSelector("[name='name']");
+    @FindBy(xpath = "(//li[contains(@class,'playlist')]//a)[3]")
+    WebElement playlistClick;
 
-    By notification = By.cssSelector("div.success.show");
+    @FindBy(css = "[name='name']")
+    WebElement playlistInputField;
+
+    @FindBy(css = "div.success.show")
+    WebElement notification;
+
+    @FindBy(css = "[type='search']")
+    WebElement searchField;
+
+    @FindBy(css = "[data-test='view-all-songs-btn']")
+    WebElement viewAllButton;
+
+    @FindBy(css = "a[class='songs']")
+    WebElement allSongsButton;
+
+    @FindBy(css = "[class='album-thumb-wrapper']")
+    WebElement playButton;
+
 
     public WebElement getUserAvatar() {
-        return findElement(avatarIcon);
+        return avatarIcon;
     }
 
     public void doubleClickPlaylist() {
         Actions action = new Actions(driver);
-        action.doubleClick(findElement(playlistClick)).perform();
+        action.doubleClick((playlistClick)).perform();
     }
 
     public void enterNewPlaylistName(String newName) {
-        findElement(playlistInputField).sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        findElement(playlistInputField).sendKeys(Keys.BACK_SPACE);
+        playlistInputField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        playlistInputField.sendKeys(Keys.BACK_SPACE);
 
-        findElement(playlistInputField).sendKeys(newName);
-        findElement(playlistInputField).sendKeys(Keys.ENTER);
+        playlistInputField.sendKeys(newName);
+        playlistInputField.sendKeys(Keys.ENTER);
     }
 
     public String getRenamePlaylistSuccessMsg() {
-        return findElement(notification).getText();
+        return (notification).getText();
+    }
+
+    public void searchForSong(String songName) {
+        searchField.click();
+        searchField.clear();
+        searchField.sendKeys(songName);
+    }
+
+    public void clickOnViewAllButton() {
+        viewAllButton.click();
+    }
+
+    public String generateRandomName() {
+        return UUID.randomUUID().toString().replace("-", "").substring(0,5);
+    }
+
+    public void clickOnAllSongsButton() {
+        allSongsButton.click();
+    }
+
+    public WebElement hoverOnPlayButton() {
+        actions.moveToElement(playButton).perform();
+        return playButton;
     }
 
 
+
+
+
 }
+
+
+
