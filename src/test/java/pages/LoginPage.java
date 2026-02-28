@@ -20,14 +20,14 @@ public class LoginPage extends BasePage {
     WebElement logInButton;
 
     public LoginPage provideEmail(String email) {
-        (emailField).clear();
-        (emailField).sendKeys(email);
+        emailField.clear();
+        emailField.sendKeys(email);
         return this;
     }
 
     public LoginPage providePassword(String password) {
-        (passwordField).clear();
-        (passwordField).sendKeys(password);
+        passwordField.clear();
+        passwordField.sendKeys(password);
         return this;
     }
 
@@ -39,5 +39,12 @@ public class LoginPage extends BasePage {
         provideEmail("rinat.salimov@testpro.io");
         providePassword("rcmEq4st");
         clickOnLoginButton();
+    }
+
+    public boolean isLoginFormDisplayed() {
+        return !driver.findElements(org.openqa.selenium.By.cssSelector("input[type='email']")).isEmpty()
+                && emailField.isDisplayed()
+                && passwordField.isDisplayed()
+                && logInButton.isDisplayed();
     }
 }

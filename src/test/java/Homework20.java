@@ -15,16 +15,16 @@ public class Homework20 extends BaseTest{
     @Parameters("baseUrl")
     public void deletePlaylist(String baseUrl) {
 
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
 
         //Login with valid credentials
         loginPage.login();
 
         By playlistsLocator = By.cssSelector("li.playlist a");
-        List<WebElement> playlists = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(playlistsLocator, 0));
+        List<WebElement> playlists = getWait().until(ExpectedConditions.numberOfElementsToBeMoreThan(playlistsLocator, 0));
 
-        WebElement newPlaylistButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("i[data-testid='sidebar-create-playlist-btn']")));
+        WebElement newPlaylistButton = getWait().until(ExpectedConditions.elementToBeClickable(By.cssSelector("i[data-testid='sidebar-create-playlist-btn']")));
 
 
         String playlistName = homePage.generateRandomName();
@@ -34,23 +34,23 @@ public class Homework20 extends BaseTest{
         } else  {
             newPlaylistButton.click();
 
-            WebElement createPlaylistButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("li[data-testid='playlist-context-menu-create-simple']")));
+            WebElement createPlaylistButton = getWait().until(ExpectedConditions.elementToBeClickable(By.cssSelector("li[data-testid='playlist-context-menu-create-simple']")));
 
             createPlaylistButton.click();
 
-            WebElement newPlaylistName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='name'][placeholder='↵ to save']")));
+            WebElement newPlaylistName = getWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='name'][placeholder='↵ to save']")));
 
             newPlaylistName.click();
             newPlaylistName.clear();
             newPlaylistName.sendKeys(playlistName);
             newPlaylistName.sendKeys(Keys.ENTER);
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.success.show")));
+            getWait().until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.success.show")));
         }
 
-        WebElement deletePlaylistButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.del.btn-delete-playlist[title='Delete this playlist']")));
+        WebElement deletePlaylistButton = getWait().until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.del.btn-delete-playlist[title='Delete this playlist']")));
         deletePlaylistButton.click();
 
-        WebElement notification = driver.findElement(By.cssSelector("div[class='success show']"));
+        WebElement notification = BaseTest.getDriver().findElement(By.cssSelector("div[class='success show']"));
         Assert.assertTrue(notification.isDisplayed());
     }
 

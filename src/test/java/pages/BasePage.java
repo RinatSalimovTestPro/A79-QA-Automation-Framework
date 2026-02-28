@@ -12,27 +12,34 @@ import java.time.Duration;
 
 public class BasePage {
 
-    WebDriver driver;
+    protected final WebDriver driver;
+    protected final WebDriverWait wait;
+    protected final Actions actions;
 
-    WebDriverWait wait;
-
-    Actions actions;
-
-    public BasePage(WebDriver givenDriver) {
-        driver = givenDriver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        actions = new Actions(driver);
+    public BasePage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        this.actions = new Actions(driver);
         PageFactory.initElements(driver, this);
     }
 
-    public WebElement findElement(By locator) {
+    protected WebElement findElement(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    By playValidation = By.cssSelector("[data-testid='pause-btn']");
+    private final By pauseBtn = By.cssSelector("[data-testid='pause-btn']");
 
     public boolean isSongPlaying() {
-        return findElement(playValidation).isDisplayed();
+        return !driver.findElements(pauseBtn).isEmpty()
+                && driver.findElement(pauseBtn).isDisplayed();
     }
 
+    public boolean isSongPlayingWait() {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(pauseBtn));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

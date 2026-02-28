@@ -11,8 +11,8 @@ public class Homework17 extends BaseTest {
     @Test
     public void addSongToPlaylist() {
 
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
 
         //Login with valid credentials
         loginPage.login();
@@ -23,22 +23,22 @@ public class Homework17 extends BaseTest {
         //Clicking on View all button
         homePage.clickOnViewAllButton();
 
-        WebElement songBossStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[@class='title' and normalize-space()='BossStatus']")));
+        WebElement songBossStatus = getWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[@class='title' and normalize-space()='BossStatus']")));
         songBossStatus.click();
 
-        WebElement addToButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='add-to-btn']")));
+        WebElement addToButton = getWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test='add-to-btn']")));
         addToButton.click();
 
         String generatedPlaylistName = homePage.generateRandomName();
 
-        WebElement newPlaylistName = driver.findElement(By.xpath("(//input[@data-test='new-playlist-name'])[2]"));
+        WebElement newPlaylistName = BaseTest.getDriver().findElement(By.xpath("(//input[@data-test='new-playlist-name'])[2]"));
         newPlaylistName.click();
         newPlaylistName.sendKeys(generatedPlaylistName);
 
-        WebElement saveButton = driver.findElement(By.xpath("(//button[@type='submit' and @title='Save'])[2]"));
+        WebElement saveButton = BaseTest.getDriver().findElement(By.xpath("(//button[@type='submit' and @title='Save'])[2]"));
         saveButton.click();
 
-        WebElement notification = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'success') and contains(@class,'show')]")));
+        WebElement notification = getWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'success') and contains(@class,'show')]")));
         Assert.assertTrue(notification.isDisplayed());
 
     }

@@ -15,7 +15,6 @@ public class HomePage extends BasePage{
 
     }
 
-    Actions actions = new Actions(driver);
 
     @FindBy(css = "img.avatar")
     WebElement avatarIcon;
@@ -47,8 +46,7 @@ public class HomePage extends BasePage{
     }
 
     public void doubleClickPlaylist() {
-        Actions action = new Actions(driver);
-        action.doubleClick((playlistClick)).perform();
+        actions.doubleClick(playlistClick).perform();
     }
 
     public void enterNewPlaylistName(String newName) {

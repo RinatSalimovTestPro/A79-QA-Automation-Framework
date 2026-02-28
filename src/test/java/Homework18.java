@@ -10,21 +10,21 @@ public class Homework18 extends BaseTest {
     @Test
     public void playSong() throws InterruptedException {
 
-        LoginPage loginPage = new LoginPage(driver);
-        BasePage basePage = new BasePage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        BasePage basePage = new BasePage(getDriver());
 
         //Login with valid credentials
         loginPage.login();
 
-        WebElement nextSongButton = driver.findElement(By.cssSelector("i[data-testid='play-next-btn']"));
+        WebElement nextSongButton = BaseTest.getDriver().findElement(By.cssSelector("i[data-testid='play-next-btn']"));
         nextSongButton.click();
         Thread.sleep(3000);
 
-        WebElement playButton = driver.findElement(By.cssSelector("span[data-testid='play-btn']"));
+        WebElement playButton = BaseTest.getDriver().findElement(By.cssSelector("span[data-testid='play-btn']"));
         playButton.click();
         Thread.sleep(3000);
 
-        WebElement pauseButton = driver.findElement(By.cssSelector("span[data-testid='pause-btn']"));
+        WebElement pauseButton = BaseTest.getDriver().findElement(By.cssSelector("span[data-testid='pause-btn']"));
 
         Assert.assertTrue(pauseButton.isDisplayed());
 

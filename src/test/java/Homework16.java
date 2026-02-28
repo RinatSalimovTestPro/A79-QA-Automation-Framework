@@ -8,9 +8,9 @@ public class Homework16 extends BaseTest {
     @Test
     public void registrationNavigation() {
 
-        WebElement registrationButton = driver.findElement(By.cssSelector("a[href='registration']"));
+        WebElement registrationButton = BaseTest.getDriver().findElement(By.cssSelector("a[href='registration']"));
         registrationButton.click();
-        Assert.assertTrue(driver.getCurrentUrl().contains("registration"));
+        Assert.assertTrue(BaseTest.getDriver().getCurrentUrl().contains("registration"));
 
     }
 }

@@ -12,8 +12,8 @@ public class Homework21 extends BaseTest {
 
         String updatedPaylistMsg = "Updated playlist \"Updated playlist name.\"";
 
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
 
         //Login with valid credentials
         loginPage.login();

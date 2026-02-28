@@ -16,33 +16,33 @@ public class Homework19 extends BaseTest {
     @Parameters("baseUrl")
     public void deletePlaylist(String baseUrl) {
 
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
 
         //Login with valid credentials
         loginPage.login();
 
-        List<WebElement> playlist = Collections.singletonList(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[contains(@class,'playlist')]//a"))));
+        List<WebElement> playlist = Collections.singletonList(getWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[contains(@class,'playlist')]//a"))));
 
-        WebElement newPlaylistButton = driver.findElement(By.cssSelector("i[data-testid='sidebar-create-playlist-btn']"));
+        WebElement newPlaylistButton = BaseTest.getDriver().findElement(By.cssSelector("i[data-testid='sidebar-create-playlist-btn']"));
 
         String playlistName = homePage.generateRandomName();
 
         newPlaylistButton.click();
 
-        WebElement createPlaylistButton = driver.findElement(By.cssSelector("li[data-testid='playlist-context-menu-create-simple']"));
+        WebElement createPlaylistButton = BaseTest.getDriver().findElement(By.cssSelector("li[data-testid='playlist-context-menu-create-simple']"));
         createPlaylistButton.click();
 
-        WebElement newPlaylistName = driver.findElement(By.cssSelector("input[name='name'][placeholder='↵ to save']"));
+        WebElement newPlaylistName = BaseTest.getDriver().findElement(By.cssSelector("input[name='name'][placeholder='↵ to save']"));
         newPlaylistName.click();
         newPlaylistName.clear();
         newPlaylistName.sendKeys(playlistName);
         newPlaylistName.sendKeys(Keys.ENTER);
 
-        WebElement deletePlaylistButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button[class='del btn-delete-playlist'][title='Delete this playlist']")));
+        WebElement deletePlaylistButton = getWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button[class='del btn-delete-playlist'][title='Delete this playlist']")));
         deletePlaylistButton.click();
 
-        WebElement notification = driver.findElement(By.cssSelector("div[class='success show']"));
+        WebElement notification = BaseTest.getDriver().findElement(By.cssSelector("div[class='success show']"));
         Assert.assertTrue(notification.isDisplayed());
 
     }

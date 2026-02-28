@@ -12,8 +12,8 @@ public class LoginTests extends BaseTest {
     @Test
     public void loginInvalidEmailValidPassword() {
 
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
 
         //Entering email address
         loginPage.provideEmail("invalid@testpro.io");
@@ -22,7 +22,7 @@ public class LoginTests extends BaseTest {
         //Click on log in button
         loginPage.clickOnLoginButton();
         //validating if user is logged in
-        Assert.assertFalse(homePage.getUserAvatar().isDisplayed());
+        Assert.assertTrue(loginPage.isLoginFormDisplayed(), "Login form should still be displayed");
     }
 
     @Test
@@ -30,18 +30,18 @@ public class LoginTests extends BaseTest {
 
         navigatingToPage();
 
-        Assert.assertEquals(driver.getCurrentUrl(), url);
+        Assert.assertEquals(BaseTest.getDriver().getCurrentUrl(), url);
     }
 
 
     @Test
     public void loginValidEmailPassword() {
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
 
         loginPage.login();
 
-        WebElement avatarIcon_v2 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.avatar")));
+        WebElement avatarIcon_v2 = getWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.avatar")));
         Assert.assertTrue(avatarIcon_v2.isDisplayed());
 
     }

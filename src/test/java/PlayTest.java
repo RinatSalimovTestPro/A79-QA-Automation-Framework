@@ -8,8 +8,8 @@ public class PlayTest extends BaseTest {
 
     @Test
     void hoverOverPlayButton() {
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
 
         loginPage.provideEmail("rinat.salimov@testpro.io").providePassword("rcmEq4st").clickOnLoginButton();
         homePage.clickOnAllSongsButton();
@@ -17,8 +17,6 @@ public class PlayTest extends BaseTest {
         Assert.assertTrue(homePage.hoverOnPlayButton().isDisplayed());
         homePage.hoverOnPlayButton().click();
         Assert.assertTrue(homePage.isSongPlaying());
-
-
 
     }
 
