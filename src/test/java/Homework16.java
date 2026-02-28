@@ -1,31 +1,16 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 
-public class Homework16 {
+public class Homework16 extends BaseTest {
     @Test
-    public void registrationNavigation() throws InterruptedException {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
+    public void registrationNavigation() {
 
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        String url = "https://qa.koel.app/";
-        driver.get(url);
-        Thread.sleep(5000);
-
-        WebElement registrationButton = driver.findElement(By.cssSelector("a[href='registration']"));
+        WebElement registrationButton = BaseTest.getDriver().findElement(By.cssSelector("a[href='registration']"));
         registrationButton.click();
-        Thread.sleep(5000);
-        Assert.assertTrue(driver.getCurrentUrl().contains("registration"));
-        driver.quit();
+        Assert.assertTrue(BaseTest.getDriver().getCurrentUrl().contains("registration"));
 
     }
 }

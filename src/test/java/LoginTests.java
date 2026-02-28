@@ -1,27 +1,48 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.LoginPage;
 
-import java.time.Duration;
 
 public class LoginTests extends BaseTest {
+
+    @Test
+    public void loginInvalidEmailValidPassword() {
+
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
+
+        //Entering email address
+        loginPage.provideEmail("invalid@testpro.io");
+        //Entering password
+        loginPage.providePassword("rcmEq4st");
+        //Click on log in button
+        loginPage.clickOnLoginButton();
+        //validating if user is logged in
+        Assert.assertTrue(loginPage.isLoginFormDisplayed(), "Login form should still be displayed");
+    }
+
     @Test
     public void loginEmptyEmailPassword() {
 
-//      Added ChromeOptions argument below to fix websocket error
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
+        navigatingToPage();
 
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        Assert.assertEquals(BaseTest.getDriver().getCurrentUrl(), url);
+    }
 
-        // TODO (for students): Review the configuration as part of HW15
-        
-        String url = "https://qa.koel.app/";
-        driver.get(url);
-        Assert.assertEquals(driver.getCurrentUrl(), url);
-        driver.quit();
+
+    @Test
+    public void loginValidEmailPassword() {
+
+        LoginPage loginPage = new LoginPage(getDriver());
+
+        loginPage.login();
+
+        WebElement avatarIcon_v2 = getWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img.avatar")));
+        Assert.assertTrue(avatarIcon_v2.isDisplayed());
+
     }
 }
