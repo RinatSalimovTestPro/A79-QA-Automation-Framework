@@ -1,3 +1,4 @@
+import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -10,7 +11,7 @@ import pages.LoginPage;
 
 import java.util.List;
 
-public class Homework20 extends BaseTest{
+public class Homework20 extends BaseTest {
     @Test
     @Parameters("baseUrl")
     public void deletePlaylist(String baseUrl) {
