@@ -1,3 +1,5 @@
+package tests;
+
 import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -7,7 +9,7 @@ import pages.BasePage;
 import pages.LoginPage;
 
 
-public class Homework18 extends BaseTest {
+public class PlaySong extends BaseTest {
     @Test
     public void playSong() throws InterruptedException {
 

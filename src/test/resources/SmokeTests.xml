@@ -5,12 +5,9 @@
 
     <test name="Smoke tests suite" preserve-order="false">
         <classes>
-            <class name="Homework18">
-                    <methods>
-                        <include name="loginValidEmailPassword"/>
-                        <include name="playSong"/>
-                    </methods>
-            </class>
+            <class name="tests.LoginTests"/>
+            <class name="tests.PlaySong"/>
+            <class name="tests.PlayTest"/>
         </classes>
     </test>
 </suite>

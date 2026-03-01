@@ -8,12 +8,9 @@
     <test name="Example Test" preserve-order="false">
         <parameter name="baseUrl" value="https://qa.koel.app/"/>
         <classes>
-            <class name="LoginTests"/>
-            <class name="Homework16"/>
-            <class name="Homework17"/>
-            <class name="Homework19"/>
-            <class name="Homework21"/>
-            <class name="PlayTest"/>
+
+            <class name="tests.RegistrationNavigation"/>
+
         </classes>
     </test>
 </suite>
